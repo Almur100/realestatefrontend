@@ -51,21 +51,20 @@ export default function Home() {
       backgroundSize: 'cover',
       height:'89vh' 
     }}>
-      <Typography variant='h4' sx={{ml:'200px',pt:'100px',fontWeight: 'bold',color:' #034f84' }}>
+      {<Typography variant='h4' sx={{ml:'200px',pt:'100px',fontWeight: 'bold',color:' #034f84' }}>
         World's Leading Tokenize NFT RealEstate Marketplace
-      </Typography>
-      <Typography variant='h5' sx={{ml:'370px',pt:'20px', color:'green',fontWeight:'bold' }}>
+      </Typography>}
+      {<Typography variant='h5' sx={{ml:'370px',pt:'20px', color:'green',fontWeight:'bold' }}>
         "Our Mission is to automate realestate transaction"
-      </Typography>
-      <Typography variant='h6' sx={{ml:'450px',pt:'20px',color:'#618685',fontWeight:'bold'}} >
+      </Typography>}
+      {<Typography variant='h6' sx={{ml:'450px',pt:'20px',color:'#618685',fontWeight:'bold'}} >
         "You can own a property in matter of minute"
-      </Typography>
+      </Typography>}
       
      
     </Box>
      
-    {/* <Home/> */}
-    {/* <ResponsiveAppBar/> */}
+    
     
     
    
