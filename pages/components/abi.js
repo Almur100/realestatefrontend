@@ -1,4 +1,5 @@
 const realestateabi = [
+  
   {
     "inputs": [
       {
@@ -209,6 +210,11 @@ const realestateabi = [
     "name": "FractionAssetdetails",
     "outputs": [
       {
+        "internalType": "string",
+        "name": "fassetimage",
+        "type": "string"
+      },
+      {
         "internalType": "contract IERC721",
         "name": "nft",
         "type": "address"
@@ -231,6 +237,11 @@ const realestateabi = [
       {
         "internalType": "uint256",
         "name": "rentPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fid",
         "type": "uint256"
       }
     ],
@@ -287,6 +298,11 @@ const realestateabi = [
   },
   {
     "inputs": [
+      {
+        "internalType": "string",
+        "name": "_fassetimage",
+        "type": "string"
+      },
       {
         "internalType": "contract IERC721",
         "name": "_nft",
@@ -366,6 +382,11 @@ const realestateabi = [
   },
   {
     "inputs": [
+      {
+        "internalType": "string",
+        "name": "_fassetimage",
+        "type": "string"
+      },
       {
         "internalType": "uint256",
         "name": "price",
@@ -518,6 +539,11 @@ const realestateabi = [
       {
         "components": [
           {
+            "internalType": "string",
+            "name": "fassetimage",
+            "type": "string"
+          },
+          {
             "internalType": "contract IERC721",
             "name": "nft",
             "type": "address"
@@ -540,6 +566,11 @@ const realestateabi = [
           {
             "internalType": "uint256",
             "name": "rentPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fid",
             "type": "uint256"
           }
         ],
@@ -570,6 +601,19 @@ const realestateabi = [
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getid",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
