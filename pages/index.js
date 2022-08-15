@@ -52,7 +52,7 @@ export default function Home() {
       height:'89vh' 
     }}>
       <Typography variant='h4' sx={{ml:'200px',pt:'100px',fontWeight: 'bold',color:' #034f84' }}>
-        World's Leading Tokenize NFT RealEstate Marketplace
+        World Leading Tokenize NFT RealEstate Marketplace
       </Typography>
       <Typography variant='h5' sx={{ml:'370px',pt:'20px', color:'green',fontWeight:'bold' }}>
         Our Mission is to automate realestate transaction
