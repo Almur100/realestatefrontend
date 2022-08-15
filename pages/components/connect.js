@@ -23,7 +23,7 @@ export default function Connect(){
 
     return(
         <>
-        <h1> hello almur </h1>
+       
         <button type = "submit" onClick={connect}> connect </button>
         </>
 

@@ -35,7 +35,7 @@ export default function Allrealestate() {
         if (typeof window.ethereum !== "undefined") {
           setHasMetamask(true);
         }
-      });
+      },[]);
 
       async function connect(){
         if(typeof window.ethereum !== undefined){
@@ -140,7 +140,7 @@ export default function Allrealestate() {
             hasError ? (
                 <>
                 <Box sx={{alignItems:'center',color:'red',ml:'450px',mt:'50px'}}>
-                "Error: connect your address to ethereum goerli test network"
+                {"Error: connect your address to ethereum goerli test network"}
                 </Box>
                 <Box sx={{alignItems:'center',ml:'45%',mt:'50px'}}> 
                 <Button type = "submit" onClick={connect}> connect wallet </Button>
