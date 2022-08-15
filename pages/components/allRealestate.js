@@ -95,10 +95,12 @@ export default function Allrealestate() {
 
                 const Text = ethers.utils.parseBytes32String(FA.size)
                 const Text1 = ethers.utils.parseBytes32String(A.location)
+                let uid = 1;
                 // const account= "0x71c7656ec7ab88b098defb751b7401b5f6d8976f" 
 
 
                 let fasset = {
+                    Uid:uid++,
                     image: metadata.image,
 
                     location: Text1,
@@ -156,7 +158,7 @@ export default function Allrealestate() {
 
                     <Grid container spacing={3} >
                     {listedAsset.map((item, idx) => (
-                        <Grid item sm={6} xs={12} md={6} lg={4}>
+                        <Grid key={item.Uid} item sm={6} xs={12} md={6} lg={4}>
                             <Card sx={{ maxWidth: "345" }} >
                                 <CardMedia
                                     component="img"
