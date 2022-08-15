@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import image from './images/3158.jpg';
 
-export default function Home(){
+export default function Homee(){
    
     return(
         <>
