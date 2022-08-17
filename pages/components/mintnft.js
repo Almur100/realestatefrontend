@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ethers } from 'ethers';
-import NFTabi from './nftabi'
+import nabi from './nft.json'
 import { TextField, Card, CardContent, Grid, Button, Box } from '@mui/material';
 import Container from '@mui/material/Container';
 
@@ -25,8 +25,8 @@ export default function Mintnft() {
     try {
       const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
       // const contractAddress = "0x13b3673DfE0d5bAF43508b812a444083b41E87eF";
-      const abi = NFTabi;
-      const contract = new ethers.Contract(contractAddress, abi, signer);
+      const cabi = nabi.abi;
+      const contract = new ethers.Contract(contractAddress, cabi, signer);
       // const _location = addasset.assetlocation;
       // const _contact = addasset.assetcontact;
       // const _fassetsize = addfasset.fassetsize;
@@ -72,7 +72,7 @@ export default function Mintnft() {
           {"Error: connect your address to ethereum goerli test network"}
           </Box>
           <Box sx={{alignItems:'center',ml:'45%',mt:'50px'}}> 
-          <Button type="submit" onClick={connect}> connect wallet </Button>
+          <Button variant='contained' type="submit" onClick={connect}> connect wallet </Button>
           </Box>
         </>
       ) : (

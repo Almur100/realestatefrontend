@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ethers } from 'ethers';
-import realestateabi from './abi'
+import realestateabi from './tokenizeRealestate.json'
 import { TextField, Card, CardContent, Grid, Button, Box } from '@mui/material';
 import Container from '@mui/material/Container';
 
@@ -39,8 +39,8 @@ export default function AddBuyAsset() {
     e.preventDefault();
     try {
       const contractAddress = "0x6ef8c7f41f2adad277fe204703c0a77c1cb58ce8";
-      const abi = realestateabi;
-      const contract = new ethers.Contract(contractAddress, abi, signer);
+      const cabi = realestateabi.abi;
+      const contract = new ethers.Contract(contractAddress, cabi, signer);
       // const _location = addasset.assetlocation;
       // const _contact = addasset.assetcontact;
       // const _fassetsize = addfasset.fassetsize;
@@ -51,7 +51,7 @@ export default function AddBuyAsset() {
       // const locationbytes = ethers.utils.formatBytes32String(_location) ;
       // const contactbytes = ethers.utils.formatBytes32String(_contact) ;
       // const fassetsizebytes = ethers.utils.formatBytes32String(_fassetsize) ;
-      const caddbs = await contract.addbuyfsset(_assetid, _fassetid).then((r) => {
+      const caddbs = await contract.addbuyfasset(_assetid, _fassetid).then((r) => {
         console.log(r);
       });
     } catch (e) {
@@ -83,7 +83,7 @@ export default function AddBuyAsset() {
     {hasError ? (
         <>
         <Box sx={{alignItems:'center',color:'red',ml:'450px',mt:'50px'}}>
-          {"Error: connect your address to ethereum goerli test network"}
+          {"Error: connect your address to ethereum goerli test network/sender is not owner/nft id already exist"}
           </Box>
           <Box sx={{alignItems:'center',ml:'45%',mt:'50px'}}> 
           <Button type="submit" onClick={connect}> connect wallet </Button>

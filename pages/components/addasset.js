@@ -1,16 +1,18 @@
 import { useState } from 'react'
 import { ethers } from 'ethers';
-import realestateabi from './abi'
-import NFTabi from './nftabi'
+import realestateabi from './tokenizeRealestate.json'
+import nabi from './nft.json'
 import { TextField, Card, CardContent, Grid, Button, Box } from '@mui/material';
 import { padding } from '@mui/system';
 import Container from '@mui/material/Container';
-import { create as ipfsHttpClient } from 'ipfs-http-client'
-const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
+import { Web3Storage, getFilesFromPath } from 'web3.storage'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDk5Yzk2YzVhOWE4NTI0RmE2ODlBNTEwN0M3MzJGZmExNzg4QUQyMWYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjA2NTcwNzQ5NDUsIm5hbWUiOiJuZXdhcGl3b3JrIn0.tJ0CvOzG8yf4ZUku8yekEqSDU928cYYeBsmO9R2PcHk';
+const client = new Web3Storage({ token })
 
 export default function Addasset() {
   const [hasError, setError] = useState(false);
   const [image, setImage] = useState('');
+  const [imagename, setImagename] = useState('');
   const [signer, setSigner] = useState();
   const [addasset, setaddasset] = useState({
     nftaddr: "",
@@ -40,16 +42,14 @@ export default function Addasset() {
   }
   const uploadToIPFS = async (event) => {
     event.preventDefault()
-    const file = event.target.files[0]
-    if (typeof file !== 'undefined') {
-      try {
-        const result = await client.add(file)
-        console.log(result)
-        setImage(`https://ipfs.infura.io/ipfs/${result.path}`)
-      } catch (error){
-        console.log("ipfs image upload error: ", error)
-      }
-    }
+    const fileInput = document.querySelector('input[type="file"]')
+    const name= document.querySelector('input[type=file]').files[0].name
+    const cid = await client.put(fileInput.files)
+    console.log(cid)
+    setImage(cid);
+    setImagename(name);
+   
+    
   }
 
   async function AddAsset(e) {
@@ -57,9 +57,9 @@ export default function Addasset() {
     try{
     // const contractAddress = "0x6ef8c7f41f2adad277fe204703c0a77c1cb58ce8";
     const contractAddress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
-    const abi = realestateabi;
-    const nftabi = NFTabi;
-    const contract = new ethers.Contract(contractAddress, abi, signer);
+    const cabi = realestateabi.abi;
+    const nftabi = nabi.abi;
+    const contract = new ethers.Contract(contractAddress, cabi, signer);
     // const result = await client.add(JSON.stringify({image}))
     // const imageuri = `https://ipfs.infura.io/ipfs/${result.path}`
     // const imageuri= image;
@@ -73,11 +73,11 @@ export default function Addasset() {
     const locationbytes = ethers.utils.formatBytes32String(_location);
     const contactbytes = ethers.utils.formatBytes32String(_contact);
     const fassetsizebytes = ethers.utils.formatBytes32String(_fassetsize);
-    const result = await client.add(JSON.stringify({image,_location}))
-    const imageuri = `https://ipfs.infura.io/ipfs/${result.path}`
+    
+    const imageuri = image;
     const nftcontract = new ethers.Contract(_nftaddr, nftabi, signer);
     await nftcontract.setApprovalForAll(contractAddress, true)
-    const caddbs = await contract.addAsset(imageuri,_nftaddr, _tokenid, locationbytes, contactbytes, _fassetprice, fassetsizebytes, _fassetrentcost).then((r) => {
+    const caddbs = await contract.addAsset(imageuri,imagename,_nftaddr, _tokenid, locationbytes, contactbytes, _fassetprice, fassetsizebytes, _fassetrentcost).then((r) => {
       console.log(r);
     });
   } catch(e){
@@ -107,10 +107,10 @@ export default function Addasset() {
     {hasError ? (
         <>
         <Box sx={{alignItems:'center',color:'red',ml:'450px',mt:'50px'}}>
-          {"Error: connect your address to ethereum goerli test network"}
+          {"Error reason : connect your address to ethereum goerli test network/your address not exist in marketplace"}
           </Box>
           <Box sx={{alignItems:'center',ml:'45%',mt:'50px'}}> 
-          <Button type="submit" onClick={connect}> connect wallet </Button>
+          <Button variant='contained' type="submit" onClick={connect}> connect wallet </Button>
           </Box>
         </>
       ) : (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import realestateabi from './abi'
+import realestateabi from './tokenizeRealestate.json'
 import { ethers } from 'ethers';
 import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
@@ -13,6 +13,10 @@ import PlaceIcon from '@mui/icons-material/Place';
 import Divider from '@mui/material/Divider';
 import { Link } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Web3Storage, getFilesFromPath } from 'web3.storage'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDk5Yzk2YzVhOWE4NTI0RmE2ODlBNTEwN0M3MzJGZmExNzg4QUQyMWYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjA2NTcwNzQ5NDUsIm5hbWUiOiJuZXdhcGl3b3JrIn0.tJ0CvOzG8yf4ZUku8yekEqSDU928cYYeBsmO9R2PcHk';
+const client = new Web3Storage({ token })
+
 // import Item from '@mui/material/Item';
 // import {  CardContent, Card, Grid, Stack,Item } from '@mui/material';
 
@@ -64,8 +68,8 @@ export default function Myrealestate() {
         const address = await signer.getAddress();
         console.log(address)
         const contractAddress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
-        const abi = realestateabi;
-        const contract = new ethers.Contract(contractAddress, abi, signer);
+        const cabi = realestateabi.abi;
+        const contract = new ethers.Contract(contractAddress, cabi, signer);
         const Assetid = await contract.getid();
         let Listedasset = []
         // let myasset = []
@@ -84,11 +88,15 @@ export default function Myrealestate() {
 
 
                     const FA = await contract.getfractionassetdetails(indx, findx)
-                    const uri = FA.fassetimage
-                    const response = await fetch(uri)
-                    console.log(response)
-                    const metadata = await response.json()
-                    console.log(metadata)
+                    const cid = FA.fassetimage
+                    const cidimage = FA.imagename
+                    
+                      const imageURI = `https://${cid}.ipfs.dweb.link/${cidimage}`;
+                      const url = imageURI
+
+
+                    
+                    
                     console.log(FA.nft)
                     // const num = ethers.BigNumber.from("1");
                     const num = A.id
@@ -103,8 +111,8 @@ export default function Myrealestate() {
 
                     let fasset = {
                         Uid:uid++,
-                        image: metadata.image,
-                        loc: metadata._location,
+                        image:url,
+                        
                         location: Text1,
                         id: id,
                         contact: A.contact,
@@ -158,7 +166,7 @@ export default function Myrealestate() {
                         {"Error: connect your address to ethereum goerli test network"}
                         </Box>
                         <Box sx={{alignItems:'center',ml:'45%',mt:'50px'}}> 
-                        <Button type="submit" onClick={connect}> connect wallet </Button>
+                        <Button variant='contained' type="submit" onClick={connect}> connect wallet </Button>
                         </Box>
                     </>
 

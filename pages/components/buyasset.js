@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ethers } from 'ethers';
-import realestateabi from './abi'
+import realestateabi from './tokenizeRealestate.json'
+import nabi from './nft.json'
 import { TextField, Card, CardContent, Grid, Button, Box } from '@mui/material';
 import  Container  from '@mui/material/Container';
 
@@ -38,9 +39,9 @@ export default function BuyAsset() {
     e.preventDefault();
     try {
       const contractAddress = "0x6ef8c7f41f2adad277fe204703c0a77c1cb58ce8";
-      const abi = realestateabi;
-      const nftabi = NFTabi;
-      const contract = new ethers.Contract(contractAddress, abi, signer);
+      const cabi = realestateabi.abi;
+      const nftabi = nabi.abi;
+      const contract = new ethers.Contract(contractAddress, cabi, signer);
       // const _location = addasset.assetlocation;
       // const _contact = addasset.assetcontact;
       // const _fassetsize = addfasset.fassetsize;
@@ -85,10 +86,10 @@ export default function BuyAsset() {
       {hasError ? (
         <>
         <Box sx={{alignItems:'center',color:'red',ml:'450px',mt:'50px'}}>
-          {"Error: connect your address to ethereum goerli test network"}
+          {"Error: connect your address to ethereum goerli test network/sell off"}
           </Box>
           <Box sx={{alignItems:'center',ml:'45%',mt:'50px'}}> 
-          <Button variant='outlined' type="submit" onClick={connect}> connect wallet </Button>
+          <Button variant='contained' type="submit" onClick={connect}> connect wallet </Button>
           </Box>
         </>
       ) : (

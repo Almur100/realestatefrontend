@@ -172,7 +172,7 @@ const ResponsiveAppBar = () => {
           <Box mr={10} sx={{ flexGrow: 0 }}>
             <Tooltip title="Open service">
               <IconButton color='inherit' aria-label='menu' onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Typography>Dashboard </Typography>
+                <Typography >Dashboard </Typography>
               </IconButton>
             </Tooltip>
             <Menu

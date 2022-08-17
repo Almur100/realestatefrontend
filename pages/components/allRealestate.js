@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import realestateabi from './abi'
+import realestateabi from './tokenizeRealestate.json'
 import { ethers } from 'ethers';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -16,6 +16,10 @@ import { Link } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { ClassNames } from '@emotion/react';
 import PropTypes from 'prop-types';
+import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDk5Yzk2YzVhOWE4NTI0RmE2ODlBNTEwN0M3MzJGZmExNzg4QUQyMWYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjA2NTcwNzQ5NDUsIm5hbWUiOiJuZXdhcGl3b3JrIn0.tJ0CvOzG8yf4ZUku8yekEqSDU928cYYeBsmO9R2PcHk';
+const client = new Web3Storage({ token })
+
 // import {makeStyles}  from '@mui/styles';
 // import { withStyles } from '@mui/styles';
 
@@ -25,6 +29,7 @@ import PropTypes from 'prop-types';
 
 
 export default function Allrealestate() {
+    const[signer,setSigner] = useState();
     
     const [listedAsset, setListedAsset] = useState([])
     const [hasError, setError] = useState(false);
@@ -63,12 +68,13 @@ export default function Allrealestate() {
         const Provider = new ethers.providers.Web3Provider(window.ethereum);
         // setProvider(Provider);
         const signer = Provider.getSigner();
-        console.log(signer)
+        // console.log(signer)
         const contractAddress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
-        const abi = realestateabi;
-        const contract = new ethers.Contract(contractAddress, abi, signer);
+        const cabi = realestateabi.abi;
+        const contract = new ethers.Contract(contractAddress, cabi, signer);
         const Assetid = await contract.getid();
         let Listedasset = []
+        
         for (let indx = 1; indx <= Assetid; indx++) {
             const A = await contract.assetDetails(indx)
 
@@ -77,12 +83,36 @@ export default function Allrealestate() {
             const Length = TA.length
             for (let findx = 1; findx <= Length; findx++) {
                 const FA = await contract.getfractionassetdetails(indx, findx)
-                const uri = FA.fassetimage
-                const response = await fetch(uri)
-                console.log(response)
-                const metadata = await response.json()
-                console.log(metadata)
-                console.log(FA.nft)
+                // console.log(FA)
+                const cid = FA.fassetimage
+                const cidimage = FA.imagename
+                // const cidimage =  background.png
+                console.log(cid)
+                console.log(cidimage)
+        //         const res = await client.get(cid)
+        // console.log(res.filename);
+        // const filesd = await res.files()
+        
+        // console.log(filesd);
+        // let filename;
+        
+        // for (const file of filesd) {
+        //   console.log(`${file.name}` )
+        //   filename = `${file.name}`
+        // }
+                
+
+                
+                
+                
+                
+                  const imageURI = `https://${cid}.ipfs.dweb.link/${cidimage}`;
+                
+                  const url= imageURI;
+                
+                
+                
+                
                 // const num = ethers.BigNumber.from("1");
                 const num = A.id
                 const num1 = FA.assetPrice
@@ -95,13 +125,14 @@ export default function Allrealestate() {
 
                 const Text = ethers.utils.parseBytes32String(FA.size)
                 const Text1 = ethers.utils.parseBytes32String(A.location)
-                let uid = 1;
+                
+                
                 // const account= "0x71c7656ec7ab88b098defb751b7401b5f6d8976f" 
 
 
                 let fasset = {
-                    Uid:uid++,
-                    image: metadata.image,
+                    
+                    image:url,
 
                     location: Text1,
                     id: id,
@@ -145,7 +176,7 @@ export default function Allrealestate() {
                 {"Error: connect your address to ethereum goerli test network"}
                 </Box>
                 <Box sx={{alignItems:'center',ml:'45%',mt:'50px'}}> 
-                <Button type = "submit" onClick={connect}> connect wallet </Button>
+                <Button variant='contained' type = "submit" onClick={connect}> connect wallet </Button>
                 </Box>
                 </>
 
@@ -158,7 +189,7 @@ export default function Allrealestate() {
 
                     <Grid container spacing={3} >
                     {listedAsset.map((item, idx) => (
-                        <Grid key={item.Uid} item sm={6} xs={12} md={6} lg={4}>
+                        <Grid key={item.name} item sm={6} xs={12} md={6} lg={4}>
                             <Card sx={{ maxWidth: "345" }} >
                                 <CardMedia
                                     component="img"

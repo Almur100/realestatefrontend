@@ -16,7 +16,7 @@ const image =new URL('./images/3158.jpg',import.meta.url);
 import SellOn from './components/sellon';
 import SellOf from './components/selloff';
 import Subscribe from './components/subscribe';
-import Navbar from './components/navbar';
+
 // import Home from './components/home';
 import ResponsiveAppBar from './components/appbar';
 import Link from 'next/link';
