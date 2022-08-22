@@ -38,7 +38,7 @@ export default function BuyAsset() {
   async function Buyasset(e) {
     e.preventDefault();
     try {
-      const contractAddress = "0x6ef8c7f41f2adad277fe204703c0a77c1cb58ce8";
+      const contractAddress = "0x27af769172979f8e2fcfb35dd57f9b5593b0d815";
       const cabi = realestateabi.abi;
       const nftabi = nabi.abi;
       const contract = new ethers.Contract(contractAddress, cabi, signer);

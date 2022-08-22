@@ -69,7 +69,7 @@ export default function Allrealestate() {
         // setProvider(Provider);
         const signer = Provider.getSigner();
         // console.log(signer)
-        const contractAddress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+        const contractAddress = "0x27af769172979f8e2fcfb35dd57f9b5593b0d815";
         const cabi = realestateabi.abi;
         const contract = new ethers.Contract(contractAddress, cabi, signer);
         const Assetid = await contract.getid();
@@ -83,6 +83,7 @@ export default function Allrealestate() {
             const Length = TA.length
             for (let findx = 1; findx <= Length; findx++) {
                 const FA = await contract.getfractionassetdetails(indx, findx)
+                const ownaddr = await contract.getfractionassetowner(indx, findx)
                 // console.log(FA)
                 const cid = FA.fassetimage
                 const cidimage = FA.imagename
@@ -133,6 +134,7 @@ export default function Allrealestate() {
                 let fasset = {
                     
                     image:url,
+                    Owner:ownaddr,
 
                     location: Text1,
                     id: id,
@@ -189,7 +191,7 @@ export default function Allrealestate() {
 
                     <Grid container spacing={3} >
                     {listedAsset.map((item, idx) => (
-                        <Grid key={item.name} item sm={6} xs={12} md={6} lg={4}>
+                        <Grid key={item.image} item sm={6} xs={12} md={6} lg={4}>
                             <Card sx={{ maxWidth: "345" }} >
                                 <CardMedia
                                     component="img"
@@ -211,7 +213,7 @@ export default function Allrealestate() {
                                         <Stack sx={{ mb: "5px" }} direction="row" >
                                             <PlaceIcon />
                                             <Typography sx={{ color: 'success.dark', fontSize: 18, fontWeight: 'medium' }}>
-                                                west bengal,india</Typography>
+                                                {item.location}</Typography>
                                         </Stack>
 
                                         <Stack sx={{ mb: "10px" }} direction="row" spacing={2} divider={<Divider orientation="vertical" flexItem />}>
@@ -237,7 +239,7 @@ export default function Allrealestate() {
 
                                             </Button>
                                             <Button size="small" variant='outlined'>
-                                                <Link href={`https://etherscan.io/address/${item.nft}`} >  owner address</Link>
+                                                <Link href={`https://etherscan.io/address/${item.Owner}`} >  owner address</Link>
 
                                             </Button>
                                         </Stack>

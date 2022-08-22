@@ -23,7 +23,7 @@ export default function Mintnft() {
   async function nftmint(e) {
     e.preventDefault();
     try {
-      const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+      const contractAddress = "0x652F5f72f7FACeF14BDEA3257fc7c4A90E7c8651";
       // const contractAddress = "0x13b3673DfE0d5bAF43508b812a444083b41E87eF";
       const cabi = nabi.abi;
       const contract = new ethers.Contract(contractAddress, cabi, signer);

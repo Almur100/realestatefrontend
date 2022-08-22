@@ -67,7 +67,7 @@ export default function Myrealestate() {
         const signer = Provider.getSigner();
         const address = await signer.getAddress();
         console.log(address)
-        const contractAddress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+        const contractAddress = "0x27af769172979f8e2fcfb35dd57f9b5593b0d815";
         const cabi = realestateabi.abi;
         const contract = new ethers.Contract(contractAddress, cabi, signer);
         const Assetid = await contract.getid();
