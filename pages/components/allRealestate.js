@@ -30,6 +30,7 @@ const client = new Web3Storage({ token })
 
 export default function Allrealestate() {
     const[signer,setSigner] = useState();
+    const [loading, setLoading] = useState(true)
     
     const [listedAsset, setListedAsset] = useState([])
     const [hasError, setError] = useState(false);
@@ -153,6 +154,7 @@ export default function Allrealestate() {
             }
 
         }
+        setLoading(false)
         setListedAsset(Listedasset)
     } catch(e){
         console.log(e)
@@ -164,6 +166,12 @@ export default function Allrealestate() {
     useEffect(() => {
         loadlistedAsset()
     }, [])
+
+    if (loading) return (
+        <main style={{ padding: "1rem 0" }}>
+          <h2>Loading...</h2>
+        </main>
+      )
 
 
 

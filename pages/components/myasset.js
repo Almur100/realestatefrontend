@@ -23,6 +23,7 @@ const client = new Web3Storage({ token })
 
 export default function Myrealestate() {
     const [listedAsset, setListedAsset] = useState([])
+    const [loading, setLoading] = useState(true)
     const [account, setAccount] = useState(null)
     const [hasError, setError] = useState(false);
     const [hasMetamask, setHasMetamask] = useState(false);
@@ -135,6 +136,7 @@ export default function Myrealestate() {
             }
 
         }
+        setLoading(false)
         setListedAsset(Listedasset)
     } catch(e){
         console.log(e)
@@ -152,6 +154,12 @@ export default function Myrealestate() {
     useEffect(() => {
         loadlistedAsset()
     }, [])
+
+    if (loading) return (
+        <main style={{ padding: "1rem 0" }}>
+          <h2>Loading...</h2>
+        </main>
+      )
 
 
 
